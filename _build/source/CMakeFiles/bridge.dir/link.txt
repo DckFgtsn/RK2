@@ -1,0 +1,2 @@
+/usr/bin/ar qc libbridge.a CMakeFiles/bridge.dir/Concept1.cpp.o CMakeFiles/bridge.dir/Concept2.cpp.o CMakeFiles/bridge.dir/Shapes.cpp.o
+/usr/bin/ranlib libbridge.a

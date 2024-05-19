@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/program.dir/Program.cpp.o -o program  ../source/libbridge.a 

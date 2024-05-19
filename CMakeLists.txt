@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.4)
 project(rk2)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CompilerFlags
@@ -15,11 +15,21 @@ foreach(CompilerFlag ${CompilerFlags})
   string(REPLACE "/MD" "/MT" ${CompilerFlag} "${${CompilerFlag}}")
 endforeach()
 
-if(BUILD_TESTS)
-  enable_testing()
-  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/third-party/gtest)
-  file(GLOB ${PROJECT_NAME}_TEST_SOURCES tests/*.cpp)
-  add_executable(check ${${PROJECT_NAME}_TEST_SOURCES})
-  target_link_libraries(check  gtest_main)
-  add_test(NAME check COMMAND check)
-endif()
+option(BUILD_TESTS "Build tests" ON)
+option(COVERAGE "Coverage" ON)
+
+add_subdirectory(./source)
+add_subdirectory(./examples)
+add_subdirectory(./tests)
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/source)
+
+
+enable_testing()
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/third-party/gtest)
+file(GLOB ${PROJECT_NAME}_TEST_SOURCES tests/*.cpp)
+add_executable(check ${${PROJECT_NAME}_TEST_SOURCES})
+target_link_libraries(check bridge gtest_main)
+add_test(NAME check COMMAND check)
+
+include(CPackConfig.cmake)
