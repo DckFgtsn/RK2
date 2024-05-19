@@ -1,7 +1,3 @@
-// ===========================================================================
-// ConceptualExample01.cpp // Bridge Pattern
-// ===========================================================================
-
 #include <iostream>
 #include <memory>
 
@@ -55,8 +51,3 @@ void test_conceptual_example_01(){
 
     clientCode(abstraction);
 }
-/*
-int main(){
-    test_conceptual_example_01();
-    return 0;
-}*/
