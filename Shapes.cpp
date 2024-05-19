@@ -1,25 +1,14 @@
-// ===========================================================================
-// Shapes.cpp // Bridge Pattern
-// ===========================================================================
-
 #include <iostream>
 #include <string>
 #include <memory>
 
 namespace ShapesExample {
 
-    /**
-     *  Bridge implementor interface.
-     */
     class IDrawAPI{//TODO
     public:
         virtual void drawCircle(int radius, int x, int y) = 0;
     };
 
-    /**
-     *  Concrete bridge implementor classes 'RedCircleDrawer' and 'GreenCircleDrawer'
-     *  implementing the 'IDrawAPI' interface
-     */
     class RedCircleDrawer : public IDrawAPI{
     public:
         virtual void drawCircle(int radius, int x, int y) override{
@@ -34,9 +23,6 @@ namespace ShapesExample {
         }
     };
 
-    /**
-     *  Abstract class 'Shape' using the 'IDrawAPI' interface
-     */
     class Shape{
     protected:
         std::unique_ptr<IDrawAPI> m_api;
@@ -50,9 +36,6 @@ namespace ShapesExample {
         virtual void draw() = 0;
     };
 
-    /**
-     *  Concrete class 'Circle' implementing the Shape interface
-     */
     class Circle : public Shape {
     private:
         int m_x;
@@ -68,11 +51,7 @@ namespace ShapesExample {
         }
     };
 
-    /**
-     *  Use the 'Shape' and 'IDrawAPI' classes to draw different colored circles
-     */
     static void clientCode01(){
-        // two different bridge implementor classes
         std::unique_ptr<IDrawAPI> redCircleDrawer {
                 std::make_unique<RedCircleDrawer>()
         };
@@ -81,7 +60,6 @@ namespace ShapesExample {
                 std::make_unique<GreenCircleDrawer>()
         };
 
-        // single Circle object
         std::shared_ptr<Shape> circle {
                 std::make_shared<Circle>(100, 10, 20, std::move(redCircleDrawer))
         };
@@ -92,7 +70,6 @@ namespace ShapesExample {
     }
 
     static void clientCode02(){
-        // two different bridge implementor classes
         std::unique_ptr<IDrawAPI> redCircleDrawer {
                 std::make_unique<RedCircleDrawer>()
         };
@@ -101,7 +78,6 @@ namespace ShapesExample {
                 std::make_unique<GreenCircleDrawer>()
         };
 
-        // two 'Shape' objects
         std::shared_ptr<Shape> redCircle {
                 std::make_shared<Circle>(100, 10, 20, std::move(redCircleDrawer))
         };
@@ -120,8 +96,3 @@ void test_shapes_example(){
     clientCode01();
     clientCode02();
 }
-/*
-int main(){
-    test_shapes_example();
-    return 0;
-}*/
